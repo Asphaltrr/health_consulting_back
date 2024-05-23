@@ -4,21 +4,28 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChambresTable extends Migration
+return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
         Schema::create('chambres', function (Blueprint $table) {
-            $table->id(); // Assurez-vous que cette ligne est présente pour créer une clé primaire auto-increment.
+            $table->id();
             $table->integer('nombre_lits');
             $table->integer('etage');
             $table->string('numero_chambre');
             $table->timestamps();
         });
+
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('chambres');
     }
-}
+};

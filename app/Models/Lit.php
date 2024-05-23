@@ -11,4 +11,9 @@ class Lit extends Model
         'id_chambre', 'statut'
     ];
 
+    public function chambre()
+    {
+        return $this->belongsTo(Chambre::class, 'id_chambre');
+    }
+
 }

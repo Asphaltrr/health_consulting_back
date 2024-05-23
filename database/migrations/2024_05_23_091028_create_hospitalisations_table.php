@@ -4,9 +4,12 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHospitalisationsTable extends Migration
+return new class extends Migration
 {
-    public function up()
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
     {
         Schema::create('hospitalisations', function (Blueprint $table) {
             $table->id();
@@ -14,14 +17,18 @@ class CreateHospitalisationsTable extends Migration
             $table->foreignId('id_lit')->constrained('lits');
             $table->date('date_entree');
             $table->date('date_sortie')->nullable();
-            $table->string('raison');
-            $table->string('statut_hospitalisation');
+            $table->text('raison');
+            $table->enum('statut_hospitalisation', ['en cours', 'terminée', 'annulée'])->default('en cours');
             $table->timestamps();
         });
+
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('hospitalisations');
     }
-}
+};

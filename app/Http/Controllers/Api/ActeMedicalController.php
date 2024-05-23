@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use App\Models\ActeMedical;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator; // Import de la façade Validator
+use Illuminate\Support\Facades\Log;
 
 class ActeMedicalController extends Controller
 {

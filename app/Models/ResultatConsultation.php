@@ -8,7 +8,13 @@ class ResultatConsultation extends Model
 {
     protected $table = 'resultat_consultations';
     protected $fillable = [
-        'ordonnance', 'resume'
+        'id_consultation', 'ordonnance', 'resume'
     ];
+
+    public function consultation()
+    {
+        return $this->belongsTo(Consultation::class, 'id_consultation');
+    }
+
 }
 

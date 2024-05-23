@@ -4,20 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Traitement extends Model
+class ResultatConsultation extends Model
 {
-    protected $table = 'traitements';
+    protected $table = 'resultat_consultations';
     protected $fillable = [
-        'id_consultation', 'description', 'duree'
+        'id_consultation', 'ordonnance', 'resume'
     ];
-    
+
     public function consultation()
     {
         return $this->belongsTo(Consultation::class, 'id_consultation');
     }
 
-    public function actesMedicaux()
-    {
-        return $this->hasMany(ActeMedical::class, 'id_traitement');
-    }
 }
+

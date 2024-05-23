@@ -10,4 +10,9 @@ class Chambre extends Model
     protected $fillable = [
         'nombre_lits', 'etage', 'numero_chambre'
     ];
+
+    public function lits()
+    {
+        return $this->hasMany(Lit::class, 'id_chambre');
+    }
 }

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator; // Import de la façade Validator
+use Illuminate\Support\Facades\Log;
+
 
 class PatientController extends Controller
 {
@@ -23,8 +26,17 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
+        // Convertir les chaînes vides en null
+        $input = $request->all();
+        foreach ($input as $key => $value) {
+            if ($value === "") {
+                $input[$key] = null;
+            }
+        }
+
+        Log::info('Received request with data:', $request->all());
         try {
-            $validatedData = $request->validate([
+            $validatedData = Validator::make($input, [
                 'nom_complet' => 'required|string|max:255',
                 'date_de_naissance' => 'required|date',
                 'sexe' => 'required|string',
