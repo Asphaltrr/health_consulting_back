@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('traitements', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
             $table->foreignId('id_consultation')->constrained('consultations');
             $table->text('description');
             $table->integer('duree')->nullable(); // En jours, ou autre unité de mesure appropriée

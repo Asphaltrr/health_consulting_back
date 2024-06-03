@@ -8,13 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator; // Import de la façade Validator
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class LitController extends Controller
 {
     // Récupérer tous les lits
     public function index()
     {
-        $lits = Lit::all();
+        $lits = Lit::with('chambre')->get();  // Assurez-vous d'avoir la relation 'chambre' bien définie dans le modèle Lit
         return response()->json($lits);
     }
 
@@ -23,7 +24,14 @@ class LitController extends Controller
     {
         $validatedData = $request->validate([
             'id_chambre' => 'required|exists:chambres,id', // Assurez-vous que l'ID de la chambre existe
-            'statut' => 'required|in:disponible,occupé,entretien' // Statut doit être l'un des valeurs prédéfinies
+            'statut' => 'string', // Statut doit être l'un des valeurs prédéfinies
+            'numero' => [
+                'required',
+                'integer',
+                Rule::unique('lits')->where(function ($query) use ($request) {
+                    return $query->where('id_chambre', $request->id_chambre);
+                })
+            ]
         ]);
 
         $lit = Lit::create($validatedData);
@@ -40,7 +48,6 @@ class LitController extends Controller
     public function update(Request $request, Lit $lit)
     {
         $validatedData = $request->validate([
-            'id_chambre' => 'exists:chambres,id', // Optionnel, assurez-vous que l'ID de la chambre existe si fourni
             'statut' => 'in:disponible,occupé,entretien' // Statut doit être l'un des valeurs prédéfinies
         ]);
 

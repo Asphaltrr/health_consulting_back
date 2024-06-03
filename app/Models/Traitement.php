@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ResultatConsultation extends Model
+class Traitement extends Model
 {
-    protected $table = 'resultat_consultations';
+    protected $table = 'traitements';
     protected $fillable = [
-        'id_consultation', 'ordonnance', 'resume'
+        'id_consultation','nom', 'description', 'duree'
     ];
 
     public function consultation()

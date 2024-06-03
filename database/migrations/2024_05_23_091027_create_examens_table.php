@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_consultation')->constrained('consultations');
             $table->text('description');
-            $table->text('resultats')->nullable();
+            $table->json('noms_fichiers')->nullable(); // Ajouté pour stocker les noms des fichiers
+            $table->json('paths_fichiers')->nullable(); // Ajouté pour stocker les chemins des fichiers
             $table->timestamps();
         });
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -20,17 +21,22 @@ class HospitalisationController extends Controller
     // Créer une nouvelle hospitalisation
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'id_consultation' => 'required|exists:consultations,id',
-            'id_lit' => 'required|exists:lits,id',
-            'date_entree' => 'required|date',
-            'date_sortie' => 'nullable|date|after_or_equal:date_entree',
-            'raison' => 'required|string|max:255',
-            'statut_hospitalisation' => 'required|in:planifiée,en_cours,terminée'
-        ]);
-
-        $hospitalisation = Hospitalisation::create($validatedData);
-        return response()->json($hospitalisation, Response::HTTP_CREATED);
+        try {
+            $validatedData = $request->validate([
+                'id_consultation' => 'required|exists:consultations,id',
+                'id_lit' => 'required|exists:lits,id',
+                'date_entree' => 'required|date',
+                'date_sortie' => 'nullable|date|after_or_equal:date_entree',
+                'raison' => 'required|string|max:255',
+            ]);
+            $hospitalisation = Hospitalisation::create($validatedData);
+            return response()->json($hospitalisation, 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            Log::error('Failed to create hospitalisation: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal server error occurred'], 500);
+        }
     }
 
     // Récupérer une hospitalisation spécifique
@@ -48,7 +54,6 @@ class HospitalisationController extends Controller
             'date_entree' => 'date',
             'date_sortie' => 'nullable|date|after_or_equal:date_entree',
             'raison' => 'string|max:255',
-            'statut_hospitalisation' => 'in:planifiée,en_cours,terminée'
         ]);
 
         $hospitalisation->update($validatedData);

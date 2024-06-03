@@ -18,7 +18,6 @@ return new class extends Migration
             $table->date('date_entree');
             $table->date('date_sortie')->nullable();
             $table->text('raison');
-            $table->enum('statut_hospitalisation', ['en cours', 'terminée', 'annulée'])->default('en cours');
             $table->timestamps();
         });
 

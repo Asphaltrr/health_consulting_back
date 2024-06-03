@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Traitement;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator; // Import de la façade Validator
 use Illuminate\Support\Facades\Log;
 
 class TraitementController extends Controller
@@ -21,15 +20,24 @@ class TraitementController extends Controller
     // Créer un nouveau traitement
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'id_consultation' => 'required|exists:consultations,id',
-            'description' => 'required|string',
-            'duree' => 'required|integer|min:1' // Durée en jours ou en heures, doit être un entier positif
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'id_consultation' => 'required|exists:consultations,id',
+                'nom' => 'required|string',
+                'description' => 'required|string',
+                'duree' => 'required|integer' // Durée en jours ou en heures, doit être un entier positif
+            ]);
 
-        $traitement = Traitement::create($validatedData);
-        return response()->json($traitement, Response::HTTP_CREATED);
+            $traitement = Traitement::create($validatedData);
+            return response()->json($traitement, 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        } catch (\Exception $e) {
+            Log::error('Failed to create traitement: ' . $e->getMessage());
+            return response()->json(['error' => 'Internal server error occurred'], 500);
+        }
     }
+
 
     // Récupérer un traitement spécifique
     public function show(Traitement $traitement)
@@ -56,4 +64,3 @@ class TraitementController extends Controller
         return response()->json(null, Response::HTTP_NO_CONTENT);
     }
 }
-

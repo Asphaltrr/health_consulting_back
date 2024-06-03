@@ -10,6 +10,7 @@ class Consultation extends Model
     protected $fillable = [
         'id_patient', 'date', 'heure', 'temperature', 'poids', 'pression_arterielle', 'frequence_cardiaque', 'frequence_respiratoire', 'motif_visite', 'symptomes', 'diagnostic', 'remarques', 'statut'
     ];
+
     public function patient()
     {
         return $this->belongsTo(Patient::class, 'id_patient');

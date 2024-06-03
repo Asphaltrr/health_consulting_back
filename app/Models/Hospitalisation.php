@@ -8,7 +8,7 @@ class Hospitalisation extends Model
 {
     protected $table = 'hospitalisations';
     protected $fillable = [
-        'id_consultation', 'id_lit', 'date_entree', 'date_sortie', 'raison', 'statut_hospitalisation'
+        'id_consultation', 'id_lit', 'date_entree', 'date_sortie', 'raison'
     ];
 
     public function consultation()
@@ -30,5 +30,5 @@ class Hospitalisation extends Model
     {
         return $this->hasMany(Accouchement::class, 'id_hospitalisation');
     }
-    
+
 }

@@ -8,7 +8,7 @@ class Lit extends Model
 {
     protected $table = 'lits';
     protected $fillable = [
-        'id_chambre', 'statut'
+        'id_chambre', 'statut', 'numero'
     ];
 
     public function chambre()

@@ -26,12 +26,9 @@ class CreateUserRequest extends FormRequest
     {
         //les règles de validation
         return [
-            'nom' => 'require',
-            'prenom' => 'require',
+            'name' => 'require',
             'telephone' => 'require',
             'email' => 'require',
-            'cni' => 'require',
-            'compteBanque' => 'require',
             'password'=> 'require'
         ];
     }

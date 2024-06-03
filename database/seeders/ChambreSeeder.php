@@ -13,14 +13,14 @@ class ChambreSeeder extends Seeder
      */
     public function run(): void
     {
-        $nombreChambre = 1;
-        while ($nombreChambre < 50){
-            
+        for ($i = 1; $i <= 12; $i++) {
             $chambre = [
-                ['description' => 'Descriptif chambre'],
+                'nombre_lits' => 3,
+                'etage' => rand(1, 5), // Supposons que l'étage peut être entre 1 et 5
+                'numero_chambre' => 'chambre-' . $i
             ];
 
             DB::table('chambres')->insert($chambre);
-        };
+        }
     }
 }

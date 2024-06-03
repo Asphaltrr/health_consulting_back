@@ -5,30 +5,22 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use DB;
+
 class LitSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $numeroLit = 1;
-        $numeroChambre = 1;
-        $qteLitParChambre = 1;
-
-        while ($numeroLit <= 50){
-            while($qteLitParChambre < 5){
-                $listeLit = [
-                    'description' => 'lit ',
-                    'statut' => 0,
-                    'chambre_id' => $numeroChambre
+        // On assume qu'il y a déjà 21 chambres insérées
+        for ($chambreId = 1; $chambreId <= 12; $chambreId++) {
+            for ($litNum = 1; $litNum <= 3; $litNum++) {
+                $lit = [
+                    'id_chambre' => $chambreId,
+                    'numero' => $litNum, // Numéro du lit ajouté
+                    'statut' => 'libre' // Utilisez 'libre', 'occupé', etc., selon vos besoins
                 ];
-                DB::table('lits')->insert($listeLit);
-                $qteLitParChambre = $qteLitParChambre + 1;
+
+                DB::table('lits')->insert($lit);
             }
-            $numeroChambre = $numeroChambre + 1;
-            $qteLitParChambre = 1;
-            $numeroLit++;
         }
     }
 }

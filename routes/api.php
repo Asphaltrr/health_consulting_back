@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\ConsultationController;
 use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\essai;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ChambreController;
@@ -39,6 +41,8 @@ Route::get('/test', function () {
 // Récupérer tous les patients
 Route::get('/voir-patient', [PatientController::class, 'index']);
 
+Route::get('/nombre-patient', [PatientController::class, 'countPatients']);
+
 // Créer un nouveau patient
 Route::post('/nouveau-patient', [PatientController::class, 'store']);
 
@@ -57,6 +61,8 @@ Route::delete('/supprimer-patient/{patient}', [PatientController::class, 'destro
 
 // Récupérer toutes les consultations
 Route::get('/voir-consultation', [ConsultationController::class, 'index']);
+
+Route::get('/voir-consultations-du-jour', [ConsultationController::class, 'indexConsultationsDuJour']);
 
 // Créer une nouvelle consultation
 Route::post('/nouvelle-consultation', [ConsultationController::class, 'store']);
@@ -121,7 +127,7 @@ Route::post('/nouvel-examen', [ExamenController::class, 'store']);
 Route::get('/voir-examen/{examen}', [ExamenController::class, 'show']);
 
 // Mettre à jour un examen
-Route::put('/modifier-examen/{examen}', [ExamenController::class, 'update']);
+Route::post('/ajouter-fichiers-examen/{examen}', [ExamenController::class, 'stores']);
 
 // Supprimer un examen
 Route::delete('/supprimer-examen/{examen}', [ExamenController::class, 'destroy']);
@@ -144,7 +150,7 @@ Route::put('/modifier-hospitalisation/{hospitalisation}', [HospitalisationContro
 
 // Supprimer une hospitalisation
 Route::delete('/supprimer-hospitalisation/{hospitalisation}', [HospitalisationController::class, 'destroy']);
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Consultation;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator; // Import de la façade Validator
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -16,7 +17,20 @@ class ConsultationController extends Controller
         $consultations = Consultation::with('patient')->get();
         return response()->json($consultations);
     }
+    
 
+    public function indexConsultationsDuJour(Request $request)
+    {
+        // Récupérer la date passée via une requête GET, sinon utiliser la date du jour
+        $date = $request->query('date', Carbon::today()->toDateString());
+
+        // Filtrer les consultations par date
+        $consultations = Consultation::with('patient')
+                                     ->whereDate('created_at', $date)
+                                     ->get();
+
+        return response()->json($consultations);
+    }
 
     public function store(Request $request)
     {

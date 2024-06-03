@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('lits', function (Blueprint $table) {
             $table->id();
+            $table->integer('numero');
             $table->foreignId('id_chambre')->constrained('chambres');
             $table->string('statut');
             $table->timestamps();
-        });
 
+            // Définir une contrainte d'unicité sur la combinaison de numero et id_chambre
+            $table->unique(['numero', 'id_chambre'], 'numero_lit_chambre_unique');
+        });
     }
+
 
     /**
      * Reverse the migrations.

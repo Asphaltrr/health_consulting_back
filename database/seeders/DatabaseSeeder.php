@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str; // Pour générer un token aléatoire
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,18 +13,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        // Création de 10 utilisateurs avec des données générées aléatoirement
+        //User::factory(10)->create();
 
-        User::factory()->create([
-            'nom' => 'Test User',
-            'prenom' => 'Test User',
-            'telephone' => 'Test User',
+        // Création d'un utilisateur spécifique
+        /*User::factory()->create([
+            'name' => 'Test User',
+            'role' => 'admin', // Supposons que 'admin' soit un rôle valide
+            'numero_de_telephone' => '0123456789',
+            'date_de_naissance' => '1990-01-01', // Date de naissance format YYYY-MM-DD
             'email' => 'test@example.com',
-            'cni' => 'Test User',
-            'compteBanque' => 'Test User',
             'email_verified_at' => now(),
-            'password' => 'password',
-            'remember_token' => 'fhfhf',
+            'password' => bcrypt('password'), // Hashage du mot de passe
+            'remember_token' => Str::random(10), // Token aléatoire pour la session
+        ]);*/
+
+        // Appel aux autres seeders
+        $this->call([
+            ChambreSeeder::class,
+            LitSeeder::class,
+            PatientSeeder::class,
         ]);
     }
 }

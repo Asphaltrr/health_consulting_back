@@ -11,6 +11,20 @@ use Illuminate\Support\Facades\Log;
 
 class ChambreController extends Controller
 {
+
+    // Obtenir toutes les chambres
+    public function index()
+    {
+        $chambres = Chambre::all();
+        return response()->json($chambres);
+    }
+
+    // Obtenir une chambre spécifique par ID
+    public function show(Chambre $chambre)
+    {
+        return response()->json($chambre);
+    }
+
     // Créer une nouvelle chambre
     public function store(Request $request)
     {
